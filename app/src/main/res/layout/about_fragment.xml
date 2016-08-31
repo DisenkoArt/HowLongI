@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4" />
+
+    <include
+        android:id="@+id/designer_about_view"
+        layout="@layout/about_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/about_view_height"
+        android:layout_marginLeft="@dimen/about_view_margin"
+        android:layout_marginRight="@dimen/about_view_margin" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.15" />
+
+    <include
+        android:id="@+id/developer_about_view"
+        layout="@layout/about_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/about_view_height"
+        android:layout_marginLeft="@dimen/about_view_margin"
+        android:layout_marginRight="@dimen/about_view_margin" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2" />
+
+    <Button
+        android:id="@+id/about_view_share_button"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:text="@string/share_string" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.25" />
+
+</LinearLayout>
