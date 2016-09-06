@@ -2,19 +2,17 @@ package com.disenkoart.howlongi.CustomView;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Shader;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
+import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.disenkoart.howlongi.Data.GradientColor;
 import com.disenkoart.howlongi.FontManager;
 import com.disenkoart.howlongi.R;
 
@@ -38,8 +36,6 @@ public class AboutView extends LinearLayout {
 
     @BindView(R.id.rectangle_image_about_view)
     ImageView rectangleImage;
-
-    private GradientColor mRectangleColor = GradientColor.getDefaultGradient();
 
     /* -- START IMPLEMENTS CONSTRUCTORS -- */
 
@@ -67,6 +63,11 @@ public class AboutView extends LinearLayout {
     /* -- END IMPLEMENTS CONSTRUCTORS -- */
 
     /* -- START OVERRIDE METHODS -- */
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+    }
 
     /* -- END OVERRIDE METHODS -- */
 
@@ -100,20 +101,12 @@ public class AboutView extends LinearLayout {
         this.nameTitle.setText(nameTitle);
     }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        ShapeDrawable rectangle = (ShapeDrawable) getResources().getDrawable(R.drawable.designer_rectangle);
-        rectangle.getPaint().setShader(new LinearGradient(0, 0, 0, rectangleImage.getHeight(),
-                new int[]{mRectangleColor.getStartColor(), mRectangleColor.getEndColor()},
-                new float[]{0, 1f}, Shader.TileMode.REPEAT));
+    public void setRectangle(int shape) {
+        GradientDrawable rectangle = (GradientDrawable) getResources().getDrawable(shape);
         rectangleImage.setImageDrawable(rectangle);
     }
 
-    public void setRectangleColor(GradientColor color) {
-        mRectangleColor = color;
-    }
+        /* -- END PUBLIC METHODS -- */
 
-    /* -- END PUBLIC METHODS -- */
 
 }
