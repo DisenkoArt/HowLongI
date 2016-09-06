@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#ff3c3c46</color>
+    <color name="colorPrimaryDark">#44444b</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="colorBackground">#ff464650</color>
+
     <color name="colorTopViews">#ff3c3c46</color>
+    <color name="colorText">#ffd9d9d9</color>
 
     <!--AboutView-->
-    <color name="designer_view_start_color">#ff9166cc</color>
-    <color name="designer_view_end_color">#ff6626cc</color>
-    <color name="developer_view_start_color">#ff57bade</color>
-    <color name="developer_view_end_color">#ff576ede</color>
-    <color name="title_color_about_view">#ffd9d9d9</color>
+    <color name="colorStartDesignerView">#ff9166cc</color>
+    <color name="colorEndDesignerView">#ff6626cc</color>
+    <color name="colorStartDeveloperView">#ff57bade</color>
+    <color name="colorEndDeveloperView">#ff576ede</color>
+
+
+    <!--ButtonStyle-->
+    <color name="rippleColorButton">#41414b</color>
+
+    <!--CardView-->
+    <color name="colorControlHighlight">@color/fifty_percent_transparency_grey_400</color>
+    <color name="fifty_percent_transparency_grey_400">#5241414b</color>
 </resources>

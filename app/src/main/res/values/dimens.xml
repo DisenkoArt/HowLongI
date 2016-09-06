@@ -9,4 +9,7 @@
 
     <dimen name="about_view_height">100dp</dimen>
     <dimen name="about_view_margin">16dp</dimen>
+    
+    <dimen name="card_view_corner_radius">2dp</dimen>
+    <dimen name="card_view_elevation">2dp</dimen>
 </resources>

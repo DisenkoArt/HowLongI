@@ -16,4 +16,9 @@
     <string name="share_string">ESTIMATE</string>
     <string name="share_url">market://details?id=com.disenkoart.howlongi</string>
 
+
+    <!--Navigation view menu item-->
+    <string name="how_long_i_item">HOW LONG I</string>
+    <string name="archive_item">ARCHIVE</string>
+    <string name="about_item">ABOUT</string>
 </resources>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:fillViewport="true"
+    android:background="@color/colorBackground">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"/>
+
+    <com.disenkoart.howlongi.CustomView.AboutView
+        android:id="@+id/designer_about_view"
+        layout="@layout/about_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/about_view_height"
+        android:layout_marginLeft="@dimen/about_view_margin"
+        android:layout_marginRight="@dimen/about_view_margin" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.15" />
+
+    <com.disenkoart.howlongi.CustomView.AboutView
+        android:id="@+id/developer_about_view"
+        layout="@layout/about_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/about_view_height"
+        android:layout_marginLeft="@dimen/about_view_margin"
+        android:layout_marginRight="@dimen/about_view_margin" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2" />
+
+    <Button
+        android:id="@+id/about_view_share_button"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:text="@string/share_string"
+        android:textSize="19sp"
+        android:background="@drawable/ripple"
+        android:shadowRadius="0"
+        android:elevation="2dp"
+        android:textColor="@color/colorText"
+        />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.25" />
+
+</LinearLayout>
