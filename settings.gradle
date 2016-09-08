@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':hli-greendao-gen'
