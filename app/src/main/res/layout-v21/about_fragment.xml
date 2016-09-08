@@ -14,7 +14,7 @@
         android:layout_height="0dp"
         android:layout_weight="0.4"/>
 
-    <com.disenkoart.howlongi.CustomView.AboutView
+    <com.disenkoart.howlongi.customView.AboutView
         android:id="@+id/designer_about_view"
         layout="@layout/about_view"
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
         android:layout_height="0dp"
         android:layout_weight="0.15" />
 
-    <com.disenkoart.howlongi.CustomView.AboutView
+    <com.disenkoart.howlongi.customView.AboutView
         android:id="@+id/developer_about_view"
         layout="@layout/about_view"
         android:layout_width="match_parent"

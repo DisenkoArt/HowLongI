@@ -1,4 +1,4 @@
-package com.disenkoart.howlongi.Data;
+package com.disenkoart.howlongi.data;
 
 import android.graphics.Color;
 
