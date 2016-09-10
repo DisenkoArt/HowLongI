@@ -21,4 +21,20 @@
     <string name="how_long_i_item">HOW LONG I</string>
     <string name="archive_item">ARCHIVE</string>
     <string name="about_item">ABOUT</string>
+
+    <!--DateType-->
+    <string name="seconds">seconds</string>
+    <string name="minutes">minutes</string>
+    <string name="hours">hours</string>
+    <string name="days">days</string>
+    <string name="months">months</string>
+    <string name="years">years</string>
+
+    <!--TODO: чтобы сделать локализацию, как надо вспомнить-->
+    <string name="minutesValue">minutes</string>
+    <string name="hoursValue">hours</string>
+    <string name="daysValue">days</string>
+    <string name="monthsValue">months</string>
+    <string name="yearsValue">years</string>
+
 </resources>

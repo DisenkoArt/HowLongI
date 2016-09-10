@@ -9,8 +9,8 @@ import android.graphics.Typeface;
 public class FontManager {
     public static Typeface UNI_SANS;
 
-    public static void init(Context context){
-        UNI_SANS = Typeface.createFromAsset(context.getAssets(), "Uni Sans Thin.otf");
+    public static void init(){
+        UNI_SANS = Typeface.createFromAsset(MainApplication.getInstance().getApplicationContext().getAssets(), "Uni Sans Thin.otf");
         //UNI_SANS = Typeface.createFromAsset(context.getAssets(), "BEBAS.ttf");
     }
 }

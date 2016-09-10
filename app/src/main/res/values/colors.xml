@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#ff3c3c46</color>
-    <color name="colorPrimaryDark">#44444b</color>
+    <color name="colorPrimaryDark">#39353f</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="colorBackground">#ff464650</color>
 
     <color name="colorTopViews">#ff3c3c46</color>
     <color name="colorText">#ffd9d9d9</color>
+
+    <!--CircleProgressBar-->
+    <color name="pbExternalShadowColor">#ff32323c</color>
+    <color name="pbInternalShadowColor">#ff353541</color>
+    <color name="pbCenterTextColor">@color/colorText</color>
+    <color name="pbBottomTextColor">#ff959795</color>
 
     <!--AboutView-->
     <color name="colorStartDesignerView">#ff9166cc</color>
