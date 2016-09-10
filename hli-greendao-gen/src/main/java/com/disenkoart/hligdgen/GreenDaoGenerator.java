@@ -1,9 +1,6 @@
 package com.disenkoart.hligdgen;
 
-import de.greenrobot.daogenerator.DaoGenerator;
-import de.greenrobot.daogenerator.Entity;
-import de.greenrobot.daogenerator.Property;
-import de.greenrobot.daogenerator.Schema;
+import org.greenrobot.greendao.generator.*;
 
 public class GreenDaoGenerator {
 
@@ -33,7 +30,7 @@ public class GreenDaoGenerator {
     private static void createTables(Schema schema){
         Entity gradientsEntity = createGradientsTable(schema);
         Entity timersEntity = createTimersTable(schema);
-        Property gradientProperty = timersEntity.addIntProperty(GRADIENT_ID).notNull().getProperty();
+        Property gradientProperty = timersEntity.addLongProperty(GRADIENT_ID).notNull().getProperty();
         timersEntity.addToOne(gradientsEntity, gradientProperty);
     }
 
