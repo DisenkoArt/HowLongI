@@ -61,11 +61,6 @@ public class AboutView extends LinearLayout {
 
     /* -- START OVERRIDE METHODS -- */
 
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-    }
-
     /* -- END OVERRIDE METHODS -- */
 
     /* -- START PRIVATE METHODS -- */

@@ -46,7 +46,7 @@ public class GreenDaoGenerator {
         Entity timersEntity = schema.addEntity(TIMERS_TABLE);
         timersEntity.addIdProperty().primaryKey().autoincrement().notNull();
         timersEntity.addStringProperty(HLI_STRING).notNull();
-        timersEntity.addIntProperty(START_DATE_TIME).notNull();
+        timersEntity.addLongProperty(START_DATE_TIME).notNull();
         timersEntity.addIntProperty(IS_ARCHIVED).notNull();
         return timersEntity;
     }

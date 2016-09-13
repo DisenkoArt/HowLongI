@@ -17,7 +17,7 @@ public class Timer {
 
     @NotNull
     private String hliString;
-    private int startDateTime;
+    private long startDateTime;
     private int isArchived;
     private long gradientId;
 
@@ -44,7 +44,7 @@ public class Timer {
     }
 
     @Generated
-    public Timer(long id, String hliString, int startDateTime, int isArchived, long gradientId) {
+    public Timer(long id, String hliString, long startDateTime, int isArchived, long gradientId) {
         this.id = id;
         this.hliString = hliString;
         this.startDateTime = startDateTime;
@@ -77,11 +77,11 @@ public class Timer {
         this.hliString = hliString;
     }
 
-    public int getStartDateTime() {
+    public long getStartDateTime() {
         return startDateTime;
     }
 
-    public void setStartDateTime(int startDateTime) {
+    public void setStartDateTime(long startDateTime) {
         this.startDateTime = startDateTime;
     }
 

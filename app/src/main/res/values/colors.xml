@@ -21,6 +21,8 @@
     <color name="colorStartDeveloperView">#ff57bade</color>
     <color name="colorEndDeveloperView">#ff576ede</color>
 
+    <!--TimersView-->
+    <color name="colorTimersViewBottomTitle">#ff959795</color>
 
     <!--ButtonStyle-->
     <color name="rippleColorButton">#41414b</color>

@@ -2,6 +2,7 @@ package com.disenkoart.howlongi.customView.circleProgressBar;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.RadialGradient;
@@ -98,7 +99,7 @@ public class CircleProgressBar extends View {
     /**
      * Градиентный цвет заполнителя прогресс-бара.
      */
-    private Gradient mGradientColors;
+    private Gradient mGradientColors = new Gradient(-1, Color.argb(255, 241, 239, 165), Color.argb(255, 96, 185, 154));
 
     /**
      * Строка заголовка.

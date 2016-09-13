@@ -27,7 +27,7 @@ public class TimerDao extends AbstractDao<Timer, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, long.class, "id", true, "_id");
         public final static Property HliString = new Property(1, String.class, "hliString", false, "HLI_STRING");
-        public final static Property StartDateTime = new Property(2, int.class, "startDateTime", false, "START_DATE_TIME");
+        public final static Property StartDateTime = new Property(2, long.class, "startDateTime", false, "START_DATE_TIME");
         public final static Property IsArchived = new Property(3, int.class, "isArchived", false, "IS_ARCHIVED");
         public final static Property GradientId = new Property(4, long.class, "gradientId", false, "GRADIENT_ID");
     }
@@ -97,7 +97,7 @@ public class TimerDao extends AbstractDao<Timer, Long> {
         Timer entity = new Timer( //
             cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // hliString
-            cursor.getInt(offset + 2), // startDateTime
+            cursor.getLong(offset + 2), // startDateTime
             cursor.getInt(offset + 3), // isArchived
             cursor.getLong(offset + 4) // gradientId
         );
@@ -108,7 +108,7 @@ public class TimerDao extends AbstractDao<Timer, Long> {
     public void readEntity(Cursor cursor, Timer entity, int offset) {
         entity.setId(cursor.getLong(offset + 0));
         entity.setHliString(cursor.getString(offset + 1));
-        entity.setStartDateTime(cursor.getInt(offset + 2));
+        entity.setStartDateTime(cursor.getLong(offset + 2));
         entity.setIsArchived(cursor.getInt(offset + 3));
         entity.setGradientId(cursor.getLong(offset + 4));
      }

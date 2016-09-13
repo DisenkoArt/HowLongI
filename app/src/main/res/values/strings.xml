@@ -37,4 +37,9 @@
     <string name="monthsValue">months</string>
     <string name="yearsValue">years</string>
 
+    <!--TimersView-->
+    <string name="startDatetimeString">START TIME</string>
+    <string name="timersViewTitle">how long i</string>
+
+
 </resources>

@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.disenkoart.howlongi.fragments.AboutFragment;
+import com.disenkoart.howlongi.fragments.TestFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity
         Class fragmentClass = null;
         switch (menuItem.getItemId()){
             case R.id.hli_menu_item:
+                fragmentClass = TestFragment.class;
                 break;
             case R.id.archive_menu_item:
                 break;
