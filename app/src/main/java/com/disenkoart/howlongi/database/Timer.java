@@ -1,5 +1,8 @@
 package com.disenkoart.howlongi.database;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.greenrobot.greendao.annotation.*;
 
 import com.disenkoart.howlongi.database.DaoSession;
@@ -10,7 +13,7 @@ import org.greenrobot.greendao.DaoException;
  * Entity mapped to table "TIMER".
  */
 @Entity(active = true)
-public class Timer {
+public class Timer implements Parcelable{
 
     @Id(autoincrement = true)
     private long id;
@@ -50,6 +53,14 @@ public class Timer {
         this.startDateTime = startDateTime;
         this.isArchived = isArchived;
         this.gradientId = gradientId;
+    }
+
+    private Timer(Parcel parcel){
+        this.id = parcel.readLong();
+        this.hliString = parcel.readString();
+        this.startDateTime = parcel.readLong();
+        this.isArchived = parcel.readInt();
+        this.gradientId = parcel.readLong();
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -166,4 +177,30 @@ public class Timer {
         }
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeString(hliString);
+        parcel.writeLong(startDateTime);
+        parcel.writeInt(isArchived);
+        parcel.writeLong(gradientId);
+    }
+
+    public static final Parcelable.Creator<Timer> CREATOR = new Parcelable.Creator<Timer>(){
+
+        @Override
+        public Timer createFromParcel(Parcel parcel) {
+            return new Timer(parcel);
+        }
+
+        @Override
+        public Timer[] newArray(int i) {
+            return new Timer[i];
+        }
+    };
 }
