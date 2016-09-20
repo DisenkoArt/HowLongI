@@ -98,7 +98,6 @@ public class AboutView extends LinearLayout {
         rectangleImage.setImageDrawable(rectangle);
     }
 
-        /* -- END PUBLIC METHODS -- */
-
+    /* -- END PUBLIC METHODS -- */
 
 }

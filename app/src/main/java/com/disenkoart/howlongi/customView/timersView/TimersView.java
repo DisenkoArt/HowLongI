@@ -1,6 +1,8 @@
 package com.disenkoart.howlongi.customView.timersView;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -39,7 +41,7 @@ public class TimersView extends ViewGroup {
     /**
      * Строка "время старта".
      */
-    @BindString(R.string.startDatetimeString)
+    @BindString(R.string.start_datetime_string)
     String mStartDateTimeString;
 
     /**
@@ -96,6 +98,12 @@ public class TimersView extends ViewGroup {
 
     public TimersView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        init();
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public TimersView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
@@ -197,6 +205,9 @@ public class TimersView extends ViewGroup {
         }
     }
 
+    public String getTimerHLIString(){
+        return mTimerData.getHliString();
+    }
 
     /* -- END PUBLIC METHODS -- */
 
@@ -329,7 +340,7 @@ public class TimersView extends ViewGroup {
      * @return Новый текст для верхнего заголовка.
      */
     private String getTopTitle(){
-        String topTitle = getResources().getString(R.string.timersViewTitle);
+        String topTitle = getResources().getString(R.string.timers_view_title);
         if (mSelectedTimerIndex >= 0) {
             int type = ((CircleProgressBar) getChildAt(mSelectedTimerIndex)).getDataType();
             double value = DateUtils.getPeriodByUnit(mTimerData.getStartDateTime(), type);
@@ -353,21 +364,19 @@ public class TimersView extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        final int width = r - l;
-        final int height = b - t;
-        float leftRightSpace = width * 0.028f;
-        float betweenTimersSpace = width * 0.0135f;
-        final float timerWidth = (width - leftRightSpace * 2 - betweenTimersSpace * (mDateItems.size() - 1)) / mDateItems.size();
-        final int timerHeight = (int) (timerWidth * 1.5);
-        final int timerTop = (int) (height * 0.23f);
-        final int timerBottom = timerTop + timerHeight;
+        int width = getWidth(), height = getHeight();
+        int topSpace = (int) (height * 0.05), bottomSpace = (int) (height * 0.05), leftTxtSpace = (int) (width * 0.05), rightTxtSpace = (int) (width * 0.95);
+        int topTextViewHeight = (int) (height * 0.145), bottomTextViewHeight = (int) (height * 0.13);
+        mTopTitleTextView.layout(leftTxtSpace, topSpace, rightTxtSpace, topSpace + topTextViewHeight);
+        mBottomTitleTextView.layout(leftTxtSpace, height - bottomTextViewHeight - bottomSpace, rightTxtSpace, height - bottomSpace);
+        int leftRightSpace = (int) (width * 0.025), betweenSpace = (int) (width * 0.0135),
+            timerTop = mTopTitleTextView.getBottom(), timerBottom = mBottomTitleTextView.getTop();
+        final float timerWidth = (width - leftRightSpace * 2 - betweenSpace * (mDateItems.size() - 1)) / mDateItems.size();
         for (int i = 0; i < mDateItems.size(); i++) {
-            final int left = (int) (leftRightSpace + (betweenTimersSpace + timerWidth) * i);
-            final int right = (int) (left + timerWidth);
+            int left = (int) (leftRightSpace + (betweenSpace + timerWidth) * i);
+            int right = (int) (left + timerWidth);
             getChildAt(i).layout(left, timerTop, right, timerBottom);
         }
-        mTopTitleTextView.layout((int) (width * 0.05), (int) (height * 0.06), (int) (width * 0.95), (int) (height * 0.18));
-        mBottomTitleTextView.layout((int) (width * 0.07), (int) (timerBottom + (height - timerBottom) * 0.2f), (int) (width * 0.93), height);
     }
 
     @Override

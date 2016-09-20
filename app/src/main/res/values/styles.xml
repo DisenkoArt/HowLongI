@@ -30,12 +30,4 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="CardViewStyle" parent="android:Widget.TextView">
-        <item name="android:foreground">?android:attr/selectableItemBackground</item>
-        <item name="cardCornerRadius">@dimen/card_view_corner_radius</item>
-        <item name="cardElevation">@dimen/card_view_elevation</item>
-        <item name="cardPreventCornerOverlap">false</item>
-        <item name="cardUseCompatPadding">true</item>
-    </style>
-
 </resources>

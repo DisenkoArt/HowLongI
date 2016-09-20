@@ -1,12 +1,19 @@
 package com.disenkoart.howlongi.customView.timersView;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.disenkoart.howlongi.R;
+import com.disenkoart.howlongi.Tools;
 import com.disenkoart.howlongi.database.Timer;
+
+import java.io.File;
 
 /**
  * Created by Артём on 11.09.2016.
@@ -32,8 +39,14 @@ public class FullTimersView extends ViewGroup {
         init();
     }
 
-    public FullTimersView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+    public FullTimersView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public FullTimersView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
@@ -86,6 +99,32 @@ public class FullTimersView extends ViewGroup {
         mTimersView.setEnabledView(!isOpen);
     }
 
+    public void setChangeSelectedTimerIndex(TimersView.OnChangeSelectedTimerListener listener){
+        mTimersView.setChangeSelectedTimerIndex(listener);
+    }
+
+    public void setSelectedTimerIndex(int position){
+        mTimersView.setSelectedTimerIndex(position);
+    }
+
+    OnClickListener onSendButtonClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            setOpenedLeftPanel(false, false);
+            mTimersView.updateSecondsProgressBar();
+            File screenShot = Tools.saveScreenShotOfView(getContext(), FullTimersView.this);
+            setOpenedLeftPanel(true, false);
+            Uri uri = Uri.fromFile(screenShot);
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("image/*");
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            shareIntent.putExtra(Intent.EXTRA_TEXT,
+                    (getResources().getString(R.string.timers_view_title) + " " + mTimersView.getTimerHLIString() + "\n" +
+                            getResources().getString(R.string.timer_share_url)).toUpperCase());
+            getContext().startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.title_share_intent)));
+        }
+    };
+
     /* -- END PUBLIC METHODS -- */
 
 
@@ -114,7 +153,9 @@ public class FullTimersView extends ViewGroup {
             @Override
             public void onChangeOpenStatus(boolean isOpen) {
                 mTimersView.setEnabledView(!isOpen);
-                mOnChangeOpenStatusListener.onChangeOpenStatus(mLeftPanelTimerView, isOpen);
+                if (mOnChangeOpenStatusListener != null) {
+                    mOnChangeOpenStatusListener.onChangeOpenStatus(mLeftPanelTimerView, isOpen);
+                }
             }
         });
         mLeftPanelTimerView.setOpeningListener(new LeftPanelTimerView.OnOpeningListener() {
@@ -123,8 +164,9 @@ public class FullTimersView extends ViewGroup {
                 mTimersView.setAlpha(1f - percentOpening * 0.8f);
             }
         });
+        mLeftPanelTimerView.setSendButtonOnClickListener(onSendButtonClickListener);
         addView(mLeftPanelTimerView);
-        setBackground(getResources().getDrawable(R.drawable.background_button));
+        setBackgroundColor(getResources().getColor(R.color.colorTopViews));
     }
 
     private void hideLeftPanel() {
@@ -143,10 +185,11 @@ public class FullTimersView extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        int width = getWidth(), height = getHeight();
-        mLeftPanelTimerView.layout(-1, 0, (int) (width * 0.345), height - 5);
+        int width = getWidth();
+        //todo размеры
+        mLeftPanelTimerView.layout(0, 0, (int) (width * 0.345), b);
         mTimersView.layout((int) (mLeftPanelTimerView.getWidth() * LeftPanelTimerView.LEFT_PANEL_CLOSE_TRANSLATION) - 2, 0,
-                width - 3, height - 5);
+                width - 3, b);
     }
 
     /* -- END OVERRIDE METHODS -- */

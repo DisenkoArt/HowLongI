@@ -99,7 +99,7 @@ public class CircleProgressBar extends View {
     /**
      * Градиентный цвет заполнителя прогресс-бара.
      */
-    private Gradient mGradientColors = new Gradient(-1, Color.argb(255, 241, 239, 165), Color.argb(255, 96, 185, 154));
+    private Gradient mGradientColors = new Gradient(-1L, Color.argb(255, 241, 239, 165), Color.argb(255, 96, 185, 154));
 
     /**
      * Строка заголовка.

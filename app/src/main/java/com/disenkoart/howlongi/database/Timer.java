@@ -16,7 +16,7 @@ import org.greenrobot.greendao.DaoException;
 public class Timer implements Parcelable{
 
     @Id(autoincrement = true)
-    private long id;
+    private Long id;
 
     @NotNull
     private String hliString;
@@ -42,12 +42,12 @@ public class Timer implements Parcelable{
     public Timer() {
     }
 
-    public Timer(long id) {
+    public Timer(Long id) {
         this.id = id;
     }
 
     @Generated
-    public Timer(long id, String hliString, long startDateTime, int isArchived, long gradientId) {
+    public Timer(Long id, String hliString, long startDateTime, int isArchived, long gradientId) {
         this.id = id;
         this.hliString = hliString;
         this.startDateTime = startDateTime;
@@ -70,11 +70,11 @@ public class Timer implements Parcelable{
         myDao = daoSession != null ? daoSession.getTimerDao() : null;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

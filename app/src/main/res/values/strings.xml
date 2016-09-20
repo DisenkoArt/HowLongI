@@ -7,8 +7,8 @@
     <string name="action_settings">Settings</string>
 
     <!--AboutFragment-->
-    <string name="profession_title_designer">DESIGNER</string>
-    <string name="profession_title_developer">DEVELOPER</string>
+    <string name="professionTitleDesigner">DESIGNER</string>
+    <string name="professionTitleDeveloper">DEVELOPER</string>
     <string name="name_title_designer">PAVEL GNEZDILOV</string>
     <string name="name_title_developer">ARTEM DISENKO</string>
     <string name="developer_url">http://vk.com/a.d.p_69</string>
@@ -31,15 +31,18 @@
     <string name="years">years</string>
 
     <!--TODO: чтобы сделать локализацию, как надо вспомнить-->
-    <string name="minutesValue">minutes</string>
-    <string name="hoursValue">hours</string>
-    <string name="daysValue">days</string>
-    <string name="monthsValue">months</string>
-    <string name="yearsValue">years</string>
+    <string name="minutes_value">minutes</string>
+    <string name="hours_value">hours</string>
+    <string name="days_value">days</string>
+    <string name="months_value">months</string>
+    <string name="years_value">years</string>
 
     <!--TimersView-->
-    <string name="startDatetimeString">START TIME</string>
-    <string name="timersViewTitle">how long i</string>
+    <string name="start_datetime_string">START TIME</string>
+    <string name="timers_view_title">how long i</string>
+    <string name="first_hli">USE HOW LONG I</string>
+    <string name="timer_share_url">https://play.google.com/store/apps/details?id=com.disenkoart.howlongi</string>
+    <string name="title_share_intent">Share record…</string>
 
 
 </resources>

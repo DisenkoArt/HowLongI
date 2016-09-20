@@ -25,7 +25,7 @@ public class TimerDao extends AbstractDao<Timer, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, long.class, "id", true, "_id");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property HliString = new Property(1, String.class, "hliString", false, "HLI_STRING");
         public final static Property StartDateTime = new Property(2, long.class, "startDateTime", false, "START_DATE_TIME");
         public final static Property IsArchived = new Property(3, int.class, "isArchived", false, "IS_ARCHIVED");
@@ -48,7 +48,7 @@ public class TimerDao extends AbstractDao<Timer, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"TIMER\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"HLI_STRING\" TEXT NOT NULL ," + // 1: hliString
                 "\"START_DATE_TIME\" INTEGER NOT NULL ," + // 2: startDateTime
                 "\"IS_ARCHIVED\" INTEGER NOT NULL ," + // 3: isArchived
@@ -64,7 +64,11 @@ public class TimerDao extends AbstractDao<Timer, Long> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, Timer entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
         stmt.bindString(2, entity.getHliString());
         stmt.bindLong(3, entity.getStartDateTime());
         stmt.bindLong(4, entity.getIsArchived());
@@ -74,7 +78,11 @@ public class TimerDao extends AbstractDao<Timer, Long> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, Timer entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
         stmt.bindString(2, entity.getHliString());
         stmt.bindLong(3, entity.getStartDateTime());
         stmt.bindLong(4, entity.getIsArchived());
@@ -89,13 +97,13 @@ public class TimerDao extends AbstractDao<Timer, Long> {
 
     @Override
     public Long readKey(Cursor cursor, int offset) {
-        return cursor.getLong(offset + 0);
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public Timer readEntity(Cursor cursor, int offset) {
         Timer entity = new Timer( //
-            cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // hliString
             cursor.getLong(offset + 2), // startDateTime
             cursor.getInt(offset + 3), // isArchived
@@ -106,7 +114,7 @@ public class TimerDao extends AbstractDao<Timer, Long> {
      
     @Override
     public void readEntity(Cursor cursor, Timer entity, int offset) {
-        entity.setId(cursor.getLong(offset + 0));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setHliString(cursor.getString(offset + 1));
         entity.setStartDateTime(cursor.getLong(offset + 2));
         entity.setIsArchived(cursor.getInt(offset + 3));
@@ -130,7 +138,7 @@ public class TimerDao extends AbstractDao<Timer, Long> {
 
     @Override
     public boolean hasKey(Timer entity) {
-        throw new UnsupportedOperationException("Unsupported for entities with a non-null key");
+        return entity.getId() != null;
     }
 
     @Override

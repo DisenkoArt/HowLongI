@@ -58,7 +58,7 @@ public class CustomTextView extends View {
     /**
      * Интервал обновления анимации TextView.
      */
-    private static final long INTERVAL_UPDATE_VIEW = 100;
+    private static final long INTERVAL_UPDATE_VIEW = 70;
 
     /**
      * Начальное положение текста.
@@ -158,7 +158,7 @@ public class CustomTextView extends View {
      * Устанавливает минимальный размер текста для TextView.
      */
     public void setMinTextSize(){
-        mMinTextSize = (int) (mHeight * 0.9f);
+        mMinTextSize = (int) (mHeight * 0.8f);
     }
 
     public void onStopUpdate(){

@@ -76,7 +76,7 @@ public class AboutFragment extends Fragment {
 
     private void setDeveloperView(){
         developerView.setDeveloperImage(R.mipmap.ic_developer);
-        developerView.setProfessionTitle(getResources().getString(R.string.profession_title_developer));
+        developerView.setProfessionTitle(getResources().getString(R.string.professionTitleDeveloper));
         developerView.setNameTitle(getResources().getString(R.string.name_title_developer));
         developerView.setRectangle(R.drawable.developer_rectangle);
     }

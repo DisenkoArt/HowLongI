@@ -9,6 +9,9 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.disenkoart.howlongi.MainApplication;
+import com.disenkoart.howlongi.R;
+
+import org.joda.time.DateTime;
 
 /**
  * Created by Артём on 10.09.2016.
@@ -76,6 +79,11 @@ public class DBHelper {
         public static final String START_COLOR = "START_COLOR";
         public static final String END_COLOR = "END_COLOR";
 
+        public static final String TIMERS_TABLE = "TIMER";
+        public static final String HLI_STRING = "HLI_STRING";
+        public static final String START_DATE_TIME = "START_DATE_TIME";
+        public static final String GRADIENT_ID = "GRADIENT_ID";
+
         public MyOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory) {
             super(context, name, factory);
         }
@@ -132,6 +140,8 @@ public class DBHelper {
             addGradient(db, Color.argb(255, 255, 219, 171), Color.argb(255, 105, 74, 252));
             //15
             addGradient(db, Color.argb(255, 255, 89, 153), Color.argb(255, 30, 151, 208));
+
+            setFirstTimer(db);
 //        //16
 //        addGradient(Color.argb(255, 94, 87, 148), Color.argb(255, 255, 107, 176));
 //        //17
@@ -155,6 +165,14 @@ public class DBHelper {
             cv.put(START_COLOR, startColor);
             cv.put(END_COLOR, finishColor);
             db.insert(GRADIENTS_TABLE, null, cv);
+        }
+
+        private void setFirstTimer(SQLiteDatabase db){
+            ContentValues cv = new ContentValues();
+            cv.put(HLI_STRING, MainApplication.getInstance().getApplicationContext().getResources().getString(R.string.first_hli));
+            cv.put(START_DATE_TIME, DateTime.now().getMillis());
+            cv.put(GRADIENT_ID, 1);
+            db.insert(TIMERS_TABLE, null, cv);
         }
     }
 }

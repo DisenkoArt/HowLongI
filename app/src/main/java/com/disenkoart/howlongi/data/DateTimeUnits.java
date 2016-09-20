@@ -98,15 +98,15 @@ public class DateTimeUnits {
             case SECONDS:
                 return mResources.getString(R.string.seconds);
             case MINUTES:
-                return mResources.getString(R.string.minutesValue);
+                return mResources.getString(R.string.minutes_value);
             case HOURS:
-                return mResources.getString(R.string.hoursValue);
+                return mResources.getString(R.string.hours_value);
             case DAYS:
-                return mResources.getString(R.string.daysValue);
+                return mResources.getString(R.string.days_value);
             case MONTHS:
-                return mResources.getString(R.string.monthsValue);
+                return mResources.getString(R.string.months_value);
             case YEARS:
-                return mResources.getString(R.string.yearsValue);
+                return mResources.getString(R.string.years_value);
         }
         return null;
     }

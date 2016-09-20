@@ -1,6 +1,7 @@
 package com.disenkoart.howlongi;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
@@ -9,10 +10,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
+import com.disenkoart.howlongi.database.DaoSession;
+import com.disenkoart.howlongi.database.Timer;
 import com.disenkoart.howlongi.fragments.AboutFragment;
 import com.disenkoart.howlongi.fragments.TestFragment;
+import com.disenkoart.howlongi.fragments.TimersFragment;
+
+import org.joda.time.DateTime;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,12 +39,25 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
+    DaoSession mDbSession;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        mDbSession = MainApplication.getInstance().getDbSession();
         setSupportActionBar(toolbar);
+        mDbSession.getTimerDao().deleteAll();
+        for (int i = 0; i < 7; i++){
+            Timer timerins = new Timer();
+            timerins.setHliString("HOW LONG I " + i);
+            Log.d(getLocalClassName(), timerins.getHliString());
+            timerins.setGradientId(i + 1);
+            timerins.setStartDateTime(DateTime.now().minusHours(i + 2).getMillis());
+            timerins.setIsArchived(0);
+            mDbSession.getTimerDao().insert(timerins);
+        }
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -77,10 +99,12 @@ public class MainActivity extends AppCompatActivity
 
     private void selectDrawerItem(MenuItem menuItem){
         Fragment fragment;
+        Bundle bundle = new Bundle();
         Class fragmentClass = null;
         switch (menuItem.getItemId()){
             case R.id.hli_menu_item:
-                fragmentClass = TestFragment.class;
+                fragmentClass = TimersFragment.class;
+                bundle.putParcelableArrayList(Timer.class.getCanonicalName(), (ArrayList<Timer>) mDbSession.getTimerDao().loadAll());
                 break;
             case R.id.archive_menu_item:
                 break;
@@ -91,6 +115,7 @@ public class MainActivity extends AppCompatActivity
         try {
             assert fragmentClass != null;
             fragment = (Fragment) fragmentClass.newInstance();
+            fragment.setArguments(bundle);
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.frame_content, fragment).commit();
         } catch (Exception e){

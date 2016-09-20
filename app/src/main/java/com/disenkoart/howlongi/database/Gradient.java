@@ -10,7 +10,7 @@ import org.greenrobot.greendao.annotation.*;
 public class Gradient {
 
     @Id(autoincrement = true)
-    private long id;
+    private Long id;
     private int startColor;
     private int endColor;
 
@@ -18,22 +18,22 @@ public class Gradient {
     public Gradient() {
     }
 
-    public Gradient(long id) {
+    public Gradient(Long id) {
         this.id = id;
     }
 
     @Generated
-    public Gradient(long id, int startColor, int endColor) {
+    public Gradient(Long id, int startColor, int endColor) {
         this.id = id;
         this.startColor = startColor;
         this.endColor = endColor;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

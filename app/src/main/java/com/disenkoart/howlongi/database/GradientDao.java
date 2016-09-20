@@ -22,7 +22,7 @@ public class GradientDao extends AbstractDao<Gradient, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, long.class, "id", true, "_id");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property StartColor = new Property(1, int.class, "startColor", false, "START_COLOR");
         public final static Property EndColor = new Property(2, int.class, "endColor", false, "END_COLOR");
     }
@@ -40,7 +40,7 @@ public class GradientDao extends AbstractDao<Gradient, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"GRADIENT\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"START_COLOR\" INTEGER NOT NULL ," + // 1: startColor
                 "\"END_COLOR\" INTEGER NOT NULL );"); // 2: endColor
     }
@@ -54,7 +54,11 @@ public class GradientDao extends AbstractDao<Gradient, Long> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, Gradient entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
         stmt.bindLong(2, entity.getStartColor());
         stmt.bindLong(3, entity.getEndColor());
     }
@@ -62,20 +66,24 @@ public class GradientDao extends AbstractDao<Gradient, Long> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, Gradient entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
         stmt.bindLong(2, entity.getStartColor());
         stmt.bindLong(3, entity.getEndColor());
     }
 
     @Override
     public Long readKey(Cursor cursor, int offset) {
-        return cursor.getLong(offset + 0);
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public Gradient readEntity(Cursor cursor, int offset) {
         Gradient entity = new Gradient( //
-            cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getInt(offset + 1), // startColor
             cursor.getInt(offset + 2) // endColor
         );
@@ -84,7 +92,7 @@ public class GradientDao extends AbstractDao<Gradient, Long> {
      
     @Override
     public void readEntity(Cursor cursor, Gradient entity, int offset) {
-        entity.setId(cursor.getLong(offset + 0));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setStartColor(cursor.getInt(offset + 1));
         entity.setEndColor(cursor.getInt(offset + 2));
      }
@@ -106,7 +114,7 @@ public class GradientDao extends AbstractDao<Gradient, Long> {
 
     @Override
     public boolean hasKey(Gradient entity) {
-        throw new UnsupportedOperationException("Unsupported for entities with a non-null key");
+        return entity.getId() != null;
     }
 
     @Override

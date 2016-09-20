@@ -1,6 +1,7 @@
 package com.disenkoart.howlongi.customView.timersView;
 
 import android.animation.AnimatorSet;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -8,6 +9,7 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Shader;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -35,7 +37,7 @@ public class LeftPanelTimerView extends ViewGroup {
     private boolean mIsMoving = false;
     boolean isOpen;
     private float minTranslationX = 0;
-    private final float maxTranslationX = 3;
+    private final float maxTranslationX = 0;
 
     private OnChangeOpenStatusListener mChangeOpenStatusListener;
     private OnOpeningListener mOnOpeningListener;
@@ -53,6 +55,12 @@ public class LeftPanelTimerView extends ViewGroup {
 
     public LeftPanelTimerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        init();
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public LeftPanelTimerView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
@@ -124,7 +132,7 @@ public class LeftPanelTimerView extends ViewGroup {
 
     private void init() {
         setWillNotDraw(false);
-        mBackgroundGradient = new Gradient(-1, Color.argb(255, 241, 239, 165), Color.argb(255, 96, 185, 154));
+        mBackgroundGradient = new Gradient(-1L, Color.argb(255, 241, 239, 165), Color.argb(255, 96, 185, 154));
 
         mSendTimerButton = new ImageView(getContext());
         mSendTimerButton.setImageResource(R.drawable.ic_share_button);
@@ -230,26 +238,27 @@ public class LeftPanelTimerView extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        int width = r - l, height = b - t;
-        mBackgroundRect = new Rect(l, t, (int) (l + width * 0.85f), b);
-        int right = l + mBackgroundRect.width();
-        int topMargin = (int) (height * 0.08f);
-        int buttonMargin = (int) (height * 0.06f);
-        int buttonHeight = (height - 2 * (buttonMargin + topMargin))/getChildCount();
-        for (int i = 0; i < getChildCount(); i++){
-            View button = getChildAt(i);
-            button.layout(l, t + topMargin + buttonMargin * i + buttonHeight * i,
-                    right, t + topMargin + buttonMargin * i + buttonHeight * (i + 1));
-        }
-//        minTranslationX = -(width * (1 - LEFT_PANEL_CLOSE_TRANSLATION)) + width * 0.9f;
-        minTranslationX =  width * (-(1 - LEFT_PANEL_CLOSE_TRANSLATION) + 0.15f);
+        minTranslationX =  getWidth() * (-(1 - LEFT_PANEL_CLOSE_TRANSLATION) + 0.15f);
         setOpening(isOpen, false);
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        mBackgroundLinearGradient = new LinearGradient(w / 2, 0, w / 2, h, new int[]{mBackgroundGradient.getStartColor(),
+        int l = getLeft(), t = getTop(), b = getBottom();
+        mBackgroundRect = new Rect(l, t, (int) (l + w * 0.85f), b);
+        int leftMargin = (int) (l + mBackgroundRect.width() * 0.15);
+        int rightMargin = (int) (l + mBackgroundRect.width() * 0.85f);
+        int topMargin = (int) (h * 0.08f);
+        int buttonMargin = (int) (h * 0.06f);
+        int buttonHeight = (h - 2 * (buttonMargin + topMargin))/getChildCount();
+        for (int i = 0; i < getChildCount(); i++){
+            View button = getChildAt(i);
+            button.layout(leftMargin, t + topMargin + buttonMargin * i + buttonHeight * i,
+                    rightMargin, t + topMargin + buttonMargin * i + buttonHeight * (i + 1));
+        }
+        mBackgroundLinearGradient = new LinearGradient(1, t, 1, b,
+                new int[]{mBackgroundGradient.getStartColor(),
                 mBackgroundGradient.getEndColor()}, null, Shader.TileMode.CLAMP);
         mBackgroundPaint.setShader(mBackgroundLinearGradient);
     }

@@ -36,7 +36,7 @@ public class GreenDaoGenerator {
 
     private static Entity createGradientTable(Schema schema){
         Entity gradientsEntity = schema.addEntity(GRADIENTS_TABLE);
-        gradientsEntity.addIdProperty().primaryKey().autoincrement().notNull();
+        gradientsEntity.addIdProperty().primaryKey().autoincrement();
         gradientsEntity.addIntProperty(START_COLOR).notNull();
         gradientsEntity.addIntProperty(END_COLOR).notNull();
         return gradientsEntity;
@@ -44,7 +44,7 @@ public class GreenDaoGenerator {
 
     private static Entity createTimerTable(Schema schema){
         Entity timersEntity = schema.addEntity(TIMERS_TABLE);
-        timersEntity.addIdProperty().primaryKey().autoincrement().notNull();
+        timersEntity.addIdProperty().primaryKey().autoincrement();
         timersEntity.addStringProperty(HLI_STRING).notNull();
         timersEntity.addLongProperty(START_DATE_TIME).notNull();
         timersEntity.addIntProperty(IS_ARCHIVED).notNull();
