@@ -1,6 +1,5 @@
 package com.disenkoart.howlongi.adapters;
 
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import com.disenkoart.howlongi.R;
 import com.disenkoart.howlongi.customView.timersView.FullTimersView;
 import com.disenkoart.howlongi.customView.timersView.TimersView;
-import com.disenkoart.howlongi.database.Gradient;
 import com.disenkoart.howlongi.database.Timer;
 
 import java.util.ArrayList;
@@ -30,7 +28,7 @@ public class TimersAdapter extends RecyclerView.Adapter<TimersAdapter.TimerViewH
     public static final String INDEX_OF_OPEN_LEFT_PANEL_KEY = "INDEX_OF_OPEN_LEFT_PANEL_KEY";
     public static final String INDEX_SELECT_PROGRESS_BAR_LIST_KEY = "INDEX_SELECT_PROGRESS_BAR_LIST_KEY";
 
-    public TimersAdapter(ArrayList<Timer> timersData, Bundle arguments){
+    public TimersAdapter(ArrayList<Timer> timersData, Bundle arguments) {
         mTimersData = timersData;
         if (arguments != null) {
             mIndexOfOpenPanel = arguments.getInt(INDEX_OF_OPEN_LEFT_PANEL_KEY);
@@ -47,7 +45,7 @@ public class TimersAdapter extends RecyclerView.Adapter<TimersAdapter.TimerViewH
 
     @Override
     public TimerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.timers_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.timers_view, parent, false);
         return new TimerViewHolder(view);
     }
 
@@ -59,6 +57,7 @@ public class TimersAdapter extends RecyclerView.Adapter<TimersAdapter.TimerViewH
         holder.fullTimersView.setOpenedLeftPanel(mIndexOfOpenPanel == position, false);
         //holder.fullTimersView.setSendButtonOnClickListener(sendButtonOnClickListener);
     }
+
 
     @Override
     public int getItemCount() {
@@ -73,10 +72,10 @@ public class TimersAdapter extends RecyclerView.Adapter<TimersAdapter.TimerViewH
     FullTimersView.OnChangeOpenStatusListener onChangeOpenStatusListener = new FullTimersView.OnChangeOpenStatusListener() {
         @Override
         public void onChangeOpenStatus(View v, boolean isOpen) {
-            int previousPositition = mIndexOfOpenPanel;
-            mIndexOfOpenPanel = isOpen ? (Integer) ((ViewGroup)v.getParent()).getTag() : -1;
+            int previousPosition = mIndexOfOpenPanel;
+            mIndexOfOpenPanel = isOpen ? (Integer) ((ViewGroup) v.getParent()).getTag() : -1;
             if (mOnChangeIndexOfOpenPanelListener != null) {
-                mOnChangeIndexOfOpenPanelListener.onChangeIndex(previousPositition);
+                mOnChangeIndexOfOpenPanelListener.onChangeIndex(previousPosition);
             }
         }
     };
@@ -84,14 +83,34 @@ public class TimersAdapter extends RecyclerView.Adapter<TimersAdapter.TimerViewH
     TimersView.OnChangeSelectedTimerListener onChangeSelectedTimerListener = new TimersView.OnChangeSelectedTimerListener() {
         @Override
         public void onChangeSelectedTimerIndex(View v, int selectedTimerIndex) {
-            mSelectedTimerIndex.set((Integer) ((ViewGroup)v.getParent().getParent()).getTag(), selectedTimerIndex);
+            mSelectedTimerIndex.set((Integer) ((ViewGroup) v.getParent().getParent()).getTag(), selectedTimerIndex);
         }
     };
 
+    public void updateTimerData(Long timerId) {
+        int position = 0;
+        for (int i = 0; i < mTimersData.size(); i++) {
+            Timer timer = mTimersData.get(i);
+            if (timer.getId().equals(timerId)) {
+                position = i;
+            }
+        }
+        notifyItemChanged(position);
+    }
+
+    public void addTimerData(Timer timer, int position) {
+        if (position == -1){
+            position = mTimersData.size();
+        }
+        mTimersData.add(position, timer);
+        mSelectedTimerIndex.add(-1);
+        notifyItemInserted(position);
+    }
+
      /* -- START INTERFACES -- */
 
-    public static interface OnDeleteButtonClickListener {
-        public void onClick(int position, long timerId, Gradient gradientColors);
+    public interface OnDeleteButtonClickListener {
+        void onClick(Timer timerData, int position);
     }
 
 
@@ -100,7 +119,7 @@ public class TimersAdapter extends RecyclerView.Adapter<TimersAdapter.TimerViewH
     }
 
     public static interface OnChangeButtonClickListener {
-        public void onClick(int position);
+        public void onClick(Long timerId);
     }
 
     public void setOnChangeButtonClickListener(OnChangeButtonClickListener listener) {
@@ -117,7 +136,7 @@ public class TimersAdapter extends RecyclerView.Adapter<TimersAdapter.TimerViewH
 
     /* -- END INTERFACES -- */
 
-    public class TimerViewHolder extends RecyclerView.ViewHolder{
+    public class TimerViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.timers_view)
         FullTimersView fullTimersView;
 
@@ -126,25 +145,46 @@ public class TimersAdapter extends RecyclerView.Adapter<TimersAdapter.TimerViewH
             ButterKnife.bind(this, view);
             fullTimersView.setChangeOpenStatusListener(onChangeOpenStatusListener);
             fullTimersView.setChangeSelectedTimerIndex(onChangeSelectedTimerListener);
+            fullTimersView.setOnChangeButtonClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int timerPosition = (int) ((ViewGroup) v.getParent().getParent()).getTag();
+                    if (mOnChangeButtonClickListener != null) {
+                        mOnChangeButtonClickListener.onClick(mTimersData.get(timerPosition).getId());
+                    }
+                }
+            });
+            fullTimersView.setOnDeleteButtonClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int timerPosition = (int) ((ViewGroup) v.getParent().getParent()).getTag();
+                    Timer deletedTimer = mTimersData.get(timerPosition);
+                    mTimersData.remove(timerPosition);
+                    notifyItemRemoved(timerPosition);
+                    mIndexOfOpenPanel = -1;
+                    if (mOnDeleteButtonClickListener != null) {
+                        mOnDeleteButtonClickListener.onClick(deletedTimer, timerPosition);
+                    }
+                }
+            });
         }
 
-        public void invalidate(){
+        public void invalidate() {
             fullTimersView.invalidateProgressBar();
         }
 
-        public void stopUpdate(){
+        public void stopUpdate() {
             fullTimersView.onStopUpdate();
         }
 
-        public void startUpdate(){
+        public void startUpdate() {
             fullTimersView.onStartUpdate();
         }
 
-        public void setStatusLeftPanel(boolean isOpen){
+        public void setStatusLeftPanel(boolean isOpen) {
             fullTimersView.setOpenedLeftPanel(isOpen, true);
         }
     }
-
 
 
 }

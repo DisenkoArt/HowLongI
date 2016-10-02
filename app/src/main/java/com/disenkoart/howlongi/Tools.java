@@ -3,7 +3,9 @@ package com.disenkoart.howlongi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.os.Environment;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 

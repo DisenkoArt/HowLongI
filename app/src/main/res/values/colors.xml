@@ -2,12 +2,15 @@
 <resources>
     <color name="colorPrimary">#ff3c3c46</color>
     <color name="colorPrimaryDark">#39353f</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ffd9d9d9</color>
 
-    <color name="colorBackground">#ff464650</color>
+    <color name="colorBackground">#464650</color>
+
+    <color name="color_fab">#50505a</color>
 
     <color name="colorTopViews">#ff3c3c46</color>
     <color name="colorText">#ffd9d9d9</color>
+    <color name="colorHintText">#8c8c96</color>
 
     <!--CircleProgressBar-->
     <color name="pbExternalShadowColor">#ff32323c</color>
@@ -21,6 +24,8 @@
     <color name="colorStartDeveloperView">#ff57bade</color>
     <color name="colorEndDeveloperView">#ff576ede</color>
 
+    <color name="colorEmptyTextView">#ff282832</color>
+
     <!--TimersView-->
     <color name="colorTimersViewBottomTitle">#ff959795</color>
 
@@ -30,4 +35,7 @@
     <!--CardView-->
     <color name="colorControlHighlight">@color/fifty_percent_transparency_grey_400</color>
     <color name="fifty_percent_transparency_grey_400">#5241414b</color>
+
+
+    <color name="colorError">#da6767</color>
 </resources>

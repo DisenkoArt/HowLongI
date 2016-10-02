@@ -134,13 +134,13 @@ public class LeftPanelTimerView extends ViewGroup {
         setWillNotDraw(false);
         mBackgroundGradient = new Gradient(-1L, Color.argb(255, 241, 239, 165), Color.argb(255, 96, 185, 154));
 
-        mSendTimerButton = new ImageView(getContext());
-        mSendTimerButton.setImageResource(R.drawable.ic_share_button);
-        addView(mSendTimerButton);
-
         mChangeButton = new ImageView(getContext());
         mChangeButton.setImageResource(R.drawable.ic_pen_button);
         addView(mChangeButton);
+
+        mSendTimerButton = new ImageView(getContext());
+        mSendTimerButton.setImageResource(R.drawable.ic_share_button);
+        addView(mSendTimerButton);
 
         mDeleteTimerButton = new ImageView(getContext());
         mDeleteTimerButton.setImageResource(R.drawable.ic_bucket_button);

@@ -84,10 +84,12 @@ public class CustomTextView extends View {
 
     public CustomTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mTextPaint.setTypeface(FontManager.UNI_SANS);
     }
 
     public CustomTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        mTextPaint.setTypeface(FontManager.UNI_SANS);
     }
 
     /* -- END IMPLEMENTS CONSTRUCTORS -- */
@@ -164,6 +166,10 @@ public class CustomTextView extends View {
     public void onStopUpdate(){
         isRunAnimation = false;
         mUpdateTimeHandler = null;
+    }
+
+    public void setTextColor(int color){
+        mTextPaint.setColor(color);
     }
 
     /* -- END PUBLIC METHODS -- */

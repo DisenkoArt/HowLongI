@@ -44,5 +44,18 @@
     <string name="timer_share_url">https://play.google.com/store/apps/details?id=com.disenkoart.howlongi</string>
     <string name="title_share_intent">Share record…</string>
 
+    <!--AddTimerFragment-->
+    <string name="add_timer_view_how_long_i">HOW LONG I…</string>
+    <string name="add_timer_view_date">DATE</string>
+    <string name="add_timer_view_time">TIME</string>
+    <string name="add_timer_view_color">COLOR</string>
+    <string name="add_timer_view_add_button">ADD</string>
+    <string name="add_timer_view_change_button">CHANGE</string>
+    <string name="is_empty_text_hli">WRITE THE HOW LONG I…</string>
 
+    <string name="undo_button">UNDO</string>
+    <string name="undo_title">TIMER IS DELETED</string>
+
+    <string name="archive_is_empty_string">Archive is empty…</string>
+    <string name="main_view_is_empty">Add a new timer</string>
 </resources>

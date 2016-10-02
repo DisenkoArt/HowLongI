@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.disenkoart.howlongi.R;
 import com.disenkoart.howlongi.Tools;
+import com.disenkoart.howlongi.adapters.TimersAdapter;
 import com.disenkoart.howlongi.database.Timer;
 
 import java.io.File;
@@ -64,12 +65,7 @@ public class FullTimersView extends ViewGroup {
     }
 
     public void setData(Timer data) {
-        if (UpdateOn) {
-            mTimersView.updateTimerData(data);
-        } else {
-            mTimersView.setTimerData(data);
-            UpdateOn = true;
-        }
+        mTimersView.setTimerData(data);
         mLeftPanelTimerView.setGradientColor(data.getGradient());
         invalidate();
     }
@@ -97,6 +93,14 @@ public class FullTimersView extends ViewGroup {
     public void setOpenedLeftPanel(boolean isOpen, boolean isAnimation){
         mLeftPanelTimerView.setOpening(isOpen, isAnimation);
         mTimersView.setEnabledView(!isOpen);
+    }
+
+    public void setOnChangeButtonClickListener(OnClickListener listener){
+        mLeftPanelTimerView.setChangeButtonClickListener(listener);
+    }
+
+    public void setOnDeleteButtonClickListener(OnClickListener listener){
+        mLeftPanelTimerView.setDeleteButtonOnClickListener(listener);
     }
 
     public void setChangeSelectedTimerIndex(TimersView.OnChangeSelectedTimerListener listener){

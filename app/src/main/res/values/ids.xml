@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" value="integer" name="position"/>
+    <item type="id" value="long" name="timer_id"/>
+    <item type="id" value="string" name="hli_text"/>
+    <item type="id" value="long" name="date_time"/>
+    <item type="id" value="long" name="gradient_id"/>
+</resources>

@@ -111,19 +111,19 @@ public class TimersView extends ViewGroup {
 
     /* -- START PUBLIC METHODS -- */
 
-    public void onStopUpdate(){
-        if (mTimer != null){
+    public void onStopUpdate() {
+        if (mTimer != null) {
             mTimer.cancel();
             mTimer = null;
         }
-        if (mUpdateTitleTask != null){
+        if (mUpdateTitleTask != null) {
             mUpdateTitleTask.cancel();
         }
         mTopTitleTextView.onStopUpdate();
     }
 
-    public void onStartUpdate(){
-        if (mSelectedTimerIndex > 0){
+    public void onStartUpdate() {
+        if (mSelectedTimerIndex > 0) {
             scheduleTopTitleUpdate();
         }
         mTopTitleTextView.resetText(getTopTitle());
@@ -131,6 +131,7 @@ public class TimersView extends ViewGroup {
 
     /**
      * Определяет доступности View.
+     *
      * @param enabled Флаг доступности view.
      */
     public void setEnabledView(boolean enabled) {
@@ -139,6 +140,7 @@ public class TimersView extends ViewGroup {
 
     /**
      * Возвращает флаг доступности View.
+     *
      * @return Флаг доступности View.
      */
     public boolean isEnabledView() {
@@ -147,16 +149,22 @@ public class TimersView extends ViewGroup {
 
     /**
      * Задает информацию о таймере.
+     *
      * @param timerData Информация о таймере.
      */
     public void setTimerData(Timer timerData) {
-        mTimerData = timerData;
-        mTopTitleTextView.resetText(getTopTitle());
-        update();
+        if (mTimerData != null && mTimerData.getHliString().equals(timerData.getHliString())) {
+            updateTimerData(timerData);
+        } else {
+            mTimerData = timerData;
+            mTopTitleTextView.resetText(getTopTitle());
+            update();
+        }
     }
 
     /**
      * Обновляет информацию о таймере.
+     *
      * @param timerData Новая информация о таймере.
      */
     public void updateTimerData(Timer timerData) {
@@ -179,6 +187,7 @@ public class TimersView extends ViewGroup {
 
     /**
      * Устанавливает индекс выбранной View.
+     *
      * @param index Индкс выбранного таймера.
      */
     public void setSelectedTimerIndex(int index) {
@@ -187,7 +196,7 @@ public class TimersView extends ViewGroup {
             ((CircleProgressBar) getChildAt(i)).setSelectionView(mSelectedTimerIndex == -1 ? SelectEnum.NOT_SELECT :
                     mSelectedTimerIndex == i ? SelectEnum.SELECT : SelectEnum.SELECT_OTHER);
         }
-        if (mSelectedTimerIndex > 0){
+        if (mSelectedTimerIndex > 0) {
             scheduleTopTitleUpdate();
         } else {
             onStopUpdate();
@@ -205,7 +214,7 @@ public class TimersView extends ViewGroup {
         }
     }
 
-    public String getTimerHLIString(){
+    public String getTimerHLIString() {
         return mTimerData.getHliString();
     }
 
@@ -234,7 +243,7 @@ public class TimersView extends ViewGroup {
         mCurrentLocale = getResources().getConfiguration().locale;
     }
 
-    private void initProgressBars(){
+    private void initProgressBars() {
         for (int i = 0; i < mDateItems.size(); i++) {
             CircleProgressBar circleProgressBar = new CircleProgressBar(getContext());
             circleProgressBar.setDateTypeParameters(mDateItems.get(i));
@@ -261,10 +270,11 @@ public class TimersView extends ViewGroup {
 
     /**
      * Обновляет значение прогресс-бара.
-     * @param progressBar Прогресс-бар.
+     *
+     * @param progressBar   Прогресс-бар.
      * @param progressValue Новое значение прогресс-бара.
      */
-    private void updateProgressBar(CircleProgressBar progressBar, float progressValue){
+    private void updateProgressBar(CircleProgressBar progressBar, float progressValue) {
         if (progressValue >= 0 && progressValue <= 1 && (int) progressBar.getProgress() + 1 >= progressBar.getMaxProgressValue()) {
             updateNextProgressBars(progressBar);
             progressBar.setValue(DateUtils.getWholeTimeValue(mTimerData.getStartDateTime(), progressBar.getDataType()));
@@ -278,11 +288,11 @@ public class TimersView extends ViewGroup {
         }
     }
 
-    private void updateNextProgressBars(CircleProgressBar progressBar){
+    private void updateNextProgressBars(CircleProgressBar progressBar) {
         int dateUnit = progressBar.getDataType();
         for (int i = 0; i < mDateItems.size(); i++) {
             CircleProgressBar nextProgressBar = (CircleProgressBar) getChildAt(i);
-            if (nextProgressBar.getTimerDateUnit() == dateUnit){
+            if (nextProgressBar.getTimerDateUnit() == dateUnit) {
                 progressBar.setUpdatingView(false);
                 updateProgressBar(nextProgressBar, DateUtils.getCompletionDateValue(mTimerData.getStartDateTime(),
                         nextProgressBar.getDataType()));
@@ -327,7 +337,7 @@ public class TimersView extends ViewGroup {
             mUpdateUITopTitleHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (mUpdateUITopTitleHandler != null){
+                    if (mUpdateUITopTitleHandler != null) {
                         mTopTitleTextView.setText(getTopTitle());
                     }
                 }
@@ -337,9 +347,10 @@ public class TimersView extends ViewGroup {
 
     /**
      * Возвращает текст для верхнего заголовка.
+     *
      * @return Новый текст для верхнего заголовка.
      */
-    private String getTopTitle(){
+    private String getTopTitle() {
         String topTitle = getResources().getString(R.string.timers_view_title);
         if (mSelectedTimerIndex >= 0) {
             int type = ((CircleProgressBar) getChildAt(mSelectedTimerIndex)).getDataType();
@@ -370,7 +381,7 @@ public class TimersView extends ViewGroup {
         mTopTitleTextView.layout(leftTxtSpace, topSpace, rightTxtSpace, topSpace + topTextViewHeight);
         mBottomTitleTextView.layout(leftTxtSpace, height - bottomTextViewHeight - bottomSpace, rightTxtSpace, height - bottomSpace);
         int leftRightSpace = (int) (width * 0.025), betweenSpace = (int) (width * 0.0135),
-            timerTop = mTopTitleTextView.getBottom(), timerBottom = mBottomTitleTextView.getTop();
+                timerTop = mTopTitleTextView.getBottom(), timerBottom = mBottomTitleTextView.getTop();
         final float timerWidth = (width - leftRightSpace * 2 - betweenSpace * (mDateItems.size() - 1)) / mDateItems.size();
         for (int i = 0; i < mDateItems.size(); i++) {
             int left = (int) (leftRightSpace + (betweenSpace + timerWidth) * i);
@@ -402,7 +413,7 @@ public class TimersView extends ViewGroup {
                 return;
             }
             int index = (int) v.getTag();
-            if (mSelectedTimerIndex == index){
+            if (mSelectedTimerIndex == index) {
                 mSelectedTimerIndex = -1;
                 mTimer.cancel();
                 for (int i = 0; i < mDateItems.size(); i++) {
